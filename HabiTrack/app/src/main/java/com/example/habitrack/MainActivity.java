@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent newHabitTypeIntent = new Intent(v.getContext(), NewHabitTypeActivity.class);
                 //startActivityForResult(newHabitTypeIntent, REQ_HTYPE_CREATE);
                 startActivity(newHabitTypeIntent);
+
             }
         }
         );

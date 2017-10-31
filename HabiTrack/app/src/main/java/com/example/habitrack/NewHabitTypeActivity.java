@@ -15,6 +15,7 @@ public class NewHabitTypeActivity extends AppCompatActivity {
     private EditText titleBox;
     private EditText reasonBox;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,12 @@ public class NewHabitTypeActivity extends AppCompatActivity {
 
         title = titleBox.getText().toString();
         reason = reasonBox.getText().toString();
+
+        AddNew addHabit = new AddNew(HabitTypeController.getInstance(), title, reason);
+
+        HabitCommandManager manager = new HabitCommandManager(addHabit);
+
+        manager.run();
 
         finish();
     }
