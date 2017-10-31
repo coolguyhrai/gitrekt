@@ -6,4 +6,90 @@
     android:layout_height="match_parent"
     tools:context="com.example.habitrack.NewHabitTypeActivity">
 
+    <!-- Name label-->
+    <TextView
+        android:id="@+id/titleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:text="@string/habitTitleText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/titleBox" />
+
+    <!-- Title Box-->
+    <EditText
+        android:id="@+id/titleBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintLeft_toRightOf="@+id/titleLabel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Reason Label -->
+    <TextView
+        android:id="@+id/reasonLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="@string/reasonText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/reasonBox" />
+
+    <!-- Reason Box-->
+    <EditText
+        android:id="@+id/reasonBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintLeft_toRightOf="@+id/reasonLabel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleBox" />
+
+    <!-- Start Date Label -->
+    <TextView
+        android:id="@+id/startDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:text="@string/startDateText"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/startDateBox" />
+
+    <!-- Start Date Box -->
+    <EditText
+        android:id="@+id/startDateBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintLeft_toRightOf="@+id/startDateLabel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reasonBox" />
+
+    <!-- Create label button -->
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/submitHabitTypeText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginRight="32dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+
 </android.support.constraint.ConstraintLayout>

@@ -2,4 +2,13 @@
     <string name="app_name">HabiTrack</string>
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_all_habit_types">AllHabitTypesActivity</string>
+    <!--Names for Main Acitivty-->
+    <string name="createHabitButtonText">Create\nHabit</string>
+    <!--Names for New Habit Type Acitivty-->
+    <string name="habitTitleText">Habit Title</string>
+    <string name="reasonText">Reason</string>
+    <string name="startDateText">Start Date</string>
+    <string name="submitHabitTypeText">Submit</string>
+
+    <!--<string name=""></string>-->
 </resources>
