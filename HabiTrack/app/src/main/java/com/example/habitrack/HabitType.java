@@ -10,7 +10,7 @@ import java.util.Date;
 
 
 public class HabitType {
-
+  
     private Integer ID;
     private String title; // title of the habit type
     private String reason;  // reason for the habit type
@@ -76,6 +76,5 @@ public class HabitType {
     public void incrementMaxCounter(){
         currentMaxCounter++;
     }
-
 
 }

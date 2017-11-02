@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         createButton = (Button) findViewById(R.id.createHabitButtonID);
 
         createButton.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +27,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         );
-
     }
 }
