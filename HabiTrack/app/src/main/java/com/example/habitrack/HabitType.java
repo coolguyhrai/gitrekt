@@ -28,10 +28,6 @@ public class HabitType {
     private ArrayList<Integer> schedule;    // ArrayList of ints representing days of the week for the plan
     private Integer completedCounter;       // habit events currently completed
     private Integer currentMaxCounter;      // total number of habits events possible so far
-    private Boolean canBeScheduled;         // Boolean variable that determines if events can be scheduled
-    private String userID;                  // userID of the current user
-    private HabitTypeMetadata myData;       // Metadata object for the current habit type
-    private HabitEvent mostRecentEvent;     // Most recent habitEvent
     @JestId
     private String id;                      // Elastic Search ID for the habit
 
@@ -39,9 +35,6 @@ public class HabitType {
         this.ID = id;
         this.completedCounter = 0;
         this.currentMaxCounter = 0;
-        this.canBeScheduled = Boolean.FALSE;
-        this.myData = new HabitTypeMetadata(this.ID, this.id);
-        this.myData.setCanBeScheduled(this.canBeScheduled);
     }
 
     public String getTitle() {
@@ -50,7 +43,6 @@ public class HabitType {
 
     public void setTitle(String title) {
         this.title = title;
-        this.myData.setTitle(this.title);
     }
 
     public String getReason() {
@@ -66,19 +58,7 @@ public class HabitType {
     }
 
     public void setStartDate(Calendar startDate) {
-
         this.startDate = startDate;
-        // Check if ht can be scheduled ONLY if start date is BEFORE OR EQUAL today
-        Calendar today = Calendar.getInstance();
-        if(startDate.get(Calendar.YEAR) < today.get(Calendar.YEAR)
-                || (startDate.get(Calendar.YEAR) <= today.get(Calendar.YEAR)
-                && startDate.get(Calendar.MONTH) < today.get(Calendar.MONTH))
-                || (startDate.get(Calendar.MONTH) <= today.get(Calendar.MONTH)
-                && startDate.get(Calendar.YEAR) <= today.get(Calendar.YEAR)
-                && startDate.get(Calendar.DATE) <= today.get(Calendar.DATE))) {
-            this.canBeScheduled = Boolean.TRUE;
-            this.myData.setCanBeScheduled(this.canBeScheduled);
-        }
     }
 
     public ArrayList<Integer> getSchedule() {
@@ -87,7 +67,6 @@ public class HabitType {
 
     public void setSchedule(ArrayList<Integer> plan) {
         this.schedule = plan;
-        this.myData.setSchedule(this.schedule);
     }
 
     public Double getStatus(){
@@ -119,27 +98,6 @@ public class HabitType {
 
     public void setId(String id) {
         this.id = id;
-        this.myData.setEsID(this.id);
-    }
-
-    public HabitTypeMetadata getMyData() {
-        return myData;
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public HabitEvent getMostRecentEvent() {
-        return mostRecentEvent;
-    }
-
-    public void setMostRecentEvent(HabitEvent mostRecentEvent) {
-        this.mostRecentEvent = mostRecentEvent;
     }
 
     @Override

@@ -30,8 +30,6 @@ public class HabitTypeStateManager {
 
     private static ArrayList<HabitType> ALL_HABITTYPES = new ArrayList<HabitType>();
     private static ArrayList<HabitType> HABITTYPES_FOR_TODAY = new ArrayList<HabitType>();
-    // ArrayList to store the Metadata for the HabitType
-    private static ArrayList<HabitTypeMetadata> htMetadata = new ArrayList<HabitTypeMetadata>();
 
 
     private HabitTypeStateManager(){}
@@ -66,18 +64,6 @@ public class HabitTypeStateManager {
                 }
             }
         }
-    }
-
-    public void addMetadata(HabitType ht){
-        this.htMetadata.add(ht.getMyData());
-    }
-
-    public static ArrayList<HabitTypeMetadata> getHtMetadata() {
-        return htMetadata;
-    }
-
-    public static void setHtMetadata(ArrayList<HabitTypeMetadata> htMetadata) {
-        HabitTypeStateManager.htMetadata = htMetadata;
     }
 
     public ArrayList<HabitType> getAllHabitTypes(){
