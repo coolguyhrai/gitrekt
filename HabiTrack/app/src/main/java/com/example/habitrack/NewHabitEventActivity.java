@@ -3,17 +3,14 @@ package com.example.habitrack;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -41,6 +38,7 @@ public class NewHabitEventActivity extends AppCompatActivity {
     Button addEvent;
     Boolean isPhoto = Boolean.FALSE;
     Bitmap photo;
+    private SoundPlayer sound;
 
 
     @Override
@@ -97,6 +95,7 @@ public class NewHabitEventActivity extends AppCompatActivity {
 //                }
                 htc.incrementHTCurrentCounter(htID);
                 hec.completeHabitEvent(heID);
+                sound.playHabitSound();
                 finish();
 
             }

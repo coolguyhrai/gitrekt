@@ -3,7 +3,6 @@ package com.example.habitrack;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -15,15 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.Calendar;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.Calendar;
 
 /**
  * HabitEventController
@@ -65,7 +59,7 @@ public class HabitEventController {
         // Save event locally
         saveToFile();
         // Increment the completed event counter for the habit type
-        htc.incrementHTMaxCounter(habitTypeID);
+        htc.incrementHTCurrentCounter(habitTypeID);
     }
     
     public ArrayList<HabitEvent> getHabitEventsForToday(){

@@ -124,6 +124,7 @@ public class NewHabitTypeActivity extends AppCompatActivity {
                 /* Adds the new Habit Type to the Habit Type Controller */
                 if ((!(title.equals("")) && !(reason.equals("")) && plan != null)) {
                     htc.createNewHabitType(title, reason, date, plan);
+                    sound.playHabitSound();
 
 
 
@@ -132,11 +133,12 @@ public class NewHabitTypeActivity extends AppCompatActivity {
                 /* Handles all errors that may occur creating new Habit Type.
                  * Notifies the User  */
                 else {
+                    sound.playFailSound();
                     Toast.makeText(getApplicationContext(), "Invalid Creation", Toast.LENGTH_SHORT).show();
 
 
                 }
-                sound.playHabitSound();
+
 
                 finish();
             }

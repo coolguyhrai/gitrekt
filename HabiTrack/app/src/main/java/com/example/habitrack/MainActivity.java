@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -27,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button allButton;
     Button logoutButton;
     Button socialButton;
+    Button settingsButton;
     private ListView displayNames;
     //private ArrayList<HabitType> today = new ArrayList<HabitType>();
     private ArrayList<HabitEvent> today = new ArrayList<HabitEvent>();
@@ -48,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         logoutButton = (Button) findViewById(R.id.button10);
         socialButton = (Button) findViewById(R.id.button4);
         displayNames = (ListView) findViewById(R.id.listView);
+
 // ------------------
         // Checks if app is in a logged in state. If not, goes to login page (SignupActivity)
         SharedPreferences loggedInPrefs = getApplicationContext().getSharedPreferences("loggedInStatus", MODE_PRIVATE);

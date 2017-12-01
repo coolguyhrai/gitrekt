@@ -2,6 +2,7 @@ package com.example.habitrack;
 
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,6 +64,7 @@ public class HabitEventControllerTest extends AndroidTestCase {
      */
     public void testCreateHabitEvent(){
         assertEquals(this.secondhe.getComment(), comment);
+        Log.d("expect", Integer.toString(this.htc.getCompletedCounter(1).intValue()));
         assertEquals(2, this.htc.getCompletedCounter(1).intValue());
     }
     protected void tearDown(){}
