@@ -3,10 +3,8 @@ package com.example.habitrack;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,15 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.util.Calendar;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.util.Calendar;
 
 /**
  * HabitEventController
@@ -51,7 +44,7 @@ public class HabitEventController {
         this.hectx = ctx;
     }
 
-    public void createNewHabitEvent(Integer habitTypeID, Boolean isConnected, String userID){
+    public void createNewHabitEvent(Integer habitTypeID){
         Log.d("seen","itcame here");
         HabitTypeController htc = new HabitTypeController(hectx);
         HabitEvent he = new
@@ -59,20 +52,16 @@ public class HabitEventController {
         // Save the new HE ID
         saveHEID();
         he.setTitle(htc.getHabitTitle(habitTypeID));
-        he.setUserID(userID);
-        htc.setHabitTypeMostRecentEvent(habitTypeID, he);
         HabitEventStateManager.getHEStateManager().storeHabitEvent(he);
-        // Save event on elastic search if connected
-        if(isConnected) {
-            ElasticSearchController.AddHabitEvent addHabitEvent = new ElasticSearchController.AddHabitEvent();
-            addHabitEvent.execute(he);
-        }
+        // Save event on elastic search
+        ElasticSearchController.AddHabitEvent addHabitEvent = new ElasticSearchController.AddHabitEvent();
+        addHabitEvent.execute(he);
         // Save event locally
         saveToFile();
         // Increment the completed event counter for the habit type
-        htc.incrementHTMaxCounter(habitTypeID);
+        htc.incrementHTCurrentCounter(habitTypeID);
     }
-
+    
     public ArrayList<HabitEvent> getHabitEventsForToday(){
         //generateEventsForToday();
         return HabitEventStateManager.getHEStateManager().getALlHabitEventsForToday();
@@ -211,26 +200,6 @@ public class HabitEventController {
         return cal;
     }
 
-    public void setHabitEventLocation(Integer requestedID, LatLng loc){
-        HabitEvent he = this.getHabitEvent(requestedID);
-        // If the habit event exists
-        if(!he.getHabitEventID().equals(-1)){
-            he.setLocation(loc);
-        }
-    }
-
-    public LatLng getHabitEventLocation(Integer requestedID){
-        LatLng ret = null;
-        HabitEvent he = this.getHabitEvent(requestedID);
-        // If the habit event exists
-        if(!he.getHabitEventID().equals(-1)){
-            return he.getLocation();
-        } else {
-            return ret;
-        }
-    }
-
-
     public Integer getHabitEventID(Integer requestedID){
         HabitEvent he = this.getHabitEvent(requestedID);
         // If the habit event exists
@@ -250,7 +219,6 @@ public class HabitEventController {
             return -1;
         }
     }
-
 
     public void setHabitEventEncodedPhoto(Integer requestedID, String encodedPhoto){
         HabitEvent he = this.getHabitEvent(requestedID);

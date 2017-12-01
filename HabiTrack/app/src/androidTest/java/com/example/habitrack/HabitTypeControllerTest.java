@@ -1,13 +1,8 @@
 package com.example.habitrack;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.test.AndroidTestCase;
-import android.util.Log;
 
-import junit.framework.TestCase;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -82,6 +77,7 @@ public class HabitTypeControllerTest extends AndroidTestCase {
         String newReason = "changedReason";
         this.ht.setReason(newReason);
         assertEquals(newReason, this.ht.getReason());
+        this.reason = "";
         this.ht.setReason(this.reason);
         assertEquals(this.reason, this.ht.getReason());
     }

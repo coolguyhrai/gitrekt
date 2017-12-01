@@ -20,11 +20,6 @@ import java.util.Calendar;
  */
 public class NewHabitTypeActivity extends AppCompatActivity {
 
-    // bool var for connection
-    Boolean isConnected;
-    // user var
-    String userID;
-
     /* declaring variables */
     ArrayList<Integer> plan = new ArrayList<Integer>();
     Switch sundaySwitch;
@@ -41,7 +36,6 @@ public class NewHabitTypeActivity extends AppCompatActivity {
     TextView dateView;
     Button dateSelect;
     Button dateEdit;
-    Button createButton;
 
     // Request Code for date entry
     private final Integer DATE_ENTRY = 101;
@@ -58,11 +52,6 @@ public class NewHabitTypeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_habit_type);
         final HabitTypeController htc = new HabitTypeController(this);
         sound = new SoundPlayer(this);
-
-        // Get incoming intent
-        Intent incoming = getIntent();
-        isConnected = incoming.getBooleanExtra("connection", Boolean.FALSE);
-        userID = incoming.getStringExtra("currentUserID");
 
         dateView = (TextView) findViewById(R.id.htStartDateText);
         dateSelect = (Button) findViewById(R.id.selectDateButton);
@@ -85,20 +74,11 @@ public class NewHabitTypeActivity extends AppCompatActivity {
             }
         });
 
-
-
         /* Handles when user wishes to Create using the User input fields */
-        createButton = (Button) findViewById(R.id.button6);
-
-        if(!isConnected){
-            createButton.setEnabled(Boolean.FALSE);
-            Toast.makeText(getApplicationContext(), "No Internet Connection: Cannot Create Habit", Toast.LENGTH_SHORT).show();
-        }
-
+        Button createButton = (Button) findViewById(R.id.button6);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 /* Initializing */
                 EditText titleEntry = (EditText) findViewById(R.id.editText3);
                 EditText reasonEntry = (EditText) findViewById(R.id.editText4);
@@ -143,18 +123,22 @@ public class NewHabitTypeActivity extends AppCompatActivity {
 
                 /* Adds the new Habit Type to the Habit Type Controller */
                 if ((!(title.equals("")) && !(reason.equals("")) && plan != null)) {
-                    htc.createNewHabitType(title, reason, date, plan, isConnected, userID);
+                    htc.createNewHabitType(title, reason, date, plan);
+                    sound.playHabitSound();
+
+
 
                 }
 
                 /* Handles all errors that may occur creating new Habit Type.
                  * Notifies the User  */
                 else {
+                    sound.playFailSound();
                     Toast.makeText(getApplicationContext(), "Invalid Creation", Toast.LENGTH_SHORT).show();
 
 
                 }
-                sound.playHabitSound();
+
 
                 finish();
             }

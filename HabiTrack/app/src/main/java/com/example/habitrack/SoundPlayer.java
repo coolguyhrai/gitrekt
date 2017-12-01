@@ -13,6 +13,7 @@ public class SoundPlayer {
 
     private static SoundPool soundPool;
     private static int habitSound;
+    private static int failSound;
     Boolean soundON = false;
 
     public SoundPlayer(Context context){
@@ -23,6 +24,7 @@ public class SoundPlayer {
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
 
         habitSound = soundPool.load(context, R.raw.applause7,1);
+        failSound = soundPool.load(context, R.raw.fail, 1);
     }
 
     public void playHabitSound(){
@@ -30,6 +32,11 @@ public class SoundPlayer {
         //play(int soundID, float leftVolume, float rightVolume, int priority, int loop, float rate)
 
         soundPool.play(habitSound,1.0f,1.0f,1,0,1.0f);
+
+    }
+
+    public void playFailSound() {
+        soundPool.play(failSound,1.0f,1.0f,1,0,1.0f);
 
     }
 }

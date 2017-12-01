@@ -3,17 +3,14 @@ package com.example.habitrack;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,8 +20,6 @@ import java.io.InputStream;
  */
 public class NewHabitEventActivity extends AppCompatActivity {
 
-    // connection status
-    Boolean isConnected;
     // get controllers
     HabitEventController hec = new HabitEventController(this);
     HabitTypeController htc = new HabitTypeController(this);
@@ -43,9 +38,7 @@ public class NewHabitEventActivity extends AppCompatActivity {
     Button addEvent;
     Boolean isPhoto = Boolean.FALSE;
     Bitmap photo;
-
-    //Map
-    Button Map;
+    private SoundPlayer sound;
 
 
     @Override
@@ -57,7 +50,6 @@ public class NewHabitEventActivity extends AppCompatActivity {
         // Get incoming HT's ID
         heID = intent.getIntExtra("habitEventID", -1);
         htID = intent.getIntExtra("habitTypeID", -1);
-        isConnected = intent.getBooleanExtra("connection", Boolean.FALSE);
 
         // Get interesting HT's attributes
         String titleString = hec.getHabitEventTitle(heID);
@@ -84,21 +76,6 @@ public class NewHabitEventActivity extends AppCompatActivity {
         });
 
 
-
-        Map = (Button) findViewById(R.id.mapButton);
-        Map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToMap =  new Intent(NewHabitEventActivity.this, MapsActivity.class);
-                //Log.d("COOL", String.valueOf(htID));
-                goToMap.putExtra("htID", htID);
-                goToMap.putExtra("heID", heID);
-                startActivity(goToMap);
-
-            }
-        });
-
-
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +95,7 @@ public class NewHabitEventActivity extends AppCompatActivity {
 //                }
                 htc.incrementHTCurrentCounter(htID);
                 hec.completeHabitEvent(heID);
+                sound.playHabitSound();
                 finish();
 
             }

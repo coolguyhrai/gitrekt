@@ -99,10 +99,12 @@ public class HabitTrackActivityTest extends ActivityInstrumentationTestCase2<Mai
         solo.clickOnView(solo.getView(R.id.button6));
         assert(!solo.waitForText("Invalid Creation")); /* Asserts that the User has created a new Habit Type */
         solo.waitForActivity(MainActivity.class);
+    }
+
+    public void testHabitEvent() throws Exception {
+        // Entering the NewHabitEvent
         solo.assertCurrentActivity("Failed to Switch back to MainActivity", MainActivity.class);
         solo.clickInList(1);
-
-        // Entering the NewHabitEvent
         solo.waitForActivity(NewHabitEventActivity.class);
         solo.assertCurrentActivity("Failed to Go to new Habit Event", NewHabitEventActivity.class);
         solo.enterText((EditText) solo.getView(R.id.heCommentBox), "test event");
@@ -130,6 +132,8 @@ public class HabitTrackActivityTest extends ActivityInstrumentationTestCase2<Mai
     public void testSchedule() throws Exception {
         solo.assertCurrentActivity("Wrong Activity, not main activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.allButton));
+        solo.waitForActivity(AllHabitTypesActivity.class);
+        solo.assertCurrentActivity("Wrong Activity, not all types activity", AllHabitTypesActivity.class);
         solo.clickInList(1);
         solo.waitForActivity(HabitTypeDetailsActivity.class);
         solo.assertCurrentActivity("Wrong Activity, not habit type details", HabitTypeDetailsActivity.class);
@@ -153,6 +157,16 @@ public class HabitTrackActivityTest extends ActivityInstrumentationTestCase2<Mai
         solo.clickOnView(solo.getView(R.id.deleteButton));
         solo.waitForActivity(HabitTypeDetailsActivity.class);
         solo.assertCurrentActivity("Wrong Activity, not habit type details", HabitTypeDetailsActivity.class);
+    }
+
+    public void testSocial() throws Exception {
+        solo.assertCurrentActivity("Wrong Activity, not main activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.button4));
+        solo.waitForActivity(SocialActivity.class);
+        solo.assertCurrentActivity("Wrong Activity, not social activity", SocialActivity.class);
+        solo.clickOnView(solo.getView(R.id.friendsButton));
+        solo.waitForActivity(MyFollowers.class);
+        solo.assertCurrentActivity("Wrong Activity, not myFollowers class", MyFollowers.class);
     }
 
 
