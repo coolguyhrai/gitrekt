@@ -173,7 +173,9 @@ public class HabitHistory extends AppCompatActivity {
 
         Collections.reverse(the_titles);
 
-
+        /*
+        The following are buttons to show the map and reset our search
+        */
         start_over = (Button) findViewById(R.id.reset);
         show_map = (Button) findViewById(R.id.mapid);
 
@@ -187,6 +189,10 @@ public class HabitHistory extends AppCompatActivity {
 
 
         lv.setAdapter(adapter);
+
+        /*
+        show map click listener that goes to the map activity page 
+         */
 
         show_map.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -116,11 +116,6 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
 
 
-
-
-
-
-
         HabitTypeController hc = new HabitTypeController(this);
         HabitEventController hec = new HabitEventController(this);
 
@@ -205,28 +200,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         updateLocationUI();
         getDeviceLocation();
 
-//        if (friends_IDs != null) {
-//            for (i = 0; i < friends_IDs.size(); i++) {
-//                Log.d("rrr", "MarkersList" + friends_IDs.get(i));
-//                the_id = friends_IDs.get(i);
-//                Log.d("free", "ids" + the_id.toString());
-//                friends_locations.add(hec.getHabitEventLocation(Integer.parseInt(the_id)));
-//                Log.d("rrr", "the lcoation" + hec.getHabitEventLocation(Integer.parseInt(the_id)).toString());
-//
-//            }
-//
-//
-//            //Get specific habitType title
-//            for (i = 0;i< friends_locations.size();i++) {
-//                m = mMap.addMarker(new MarkerOptions().position(friends_locations.get(i)).title(hec.getAllHabitEvent().get(i).getTitle()));
-//                Markerslist.add(m);
-//                //Log.d("frass", "MarkersList" + Markerslist.toString());
-//
-//
-//            }
-//        }
 
-        //Search bar
         Log.d("eeee", "i told you souu");
         searchBar();
         switchButton();
@@ -235,7 +209,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-
+    /*
+    Function call that updates the markers and radius within 5 km
+     */
 
     public void highlight(){
 
@@ -285,6 +261,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
+    /*
+    function call that sets the filter markers
+     */
     public void switchButton(){
         Log.d("eeee", "i told you so");
         HabitEventController hec = new HabitEventController(getApplication());
