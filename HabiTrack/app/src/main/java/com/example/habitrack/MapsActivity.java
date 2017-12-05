@@ -223,7 +223,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                 ).show();
     }
-
+/*
+Handles saving the marker when pressing the back button for efficiency
+ */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -254,6 +256,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         updateLocationUI();
     }
 
+    /*
+    Handles the location of the user
+     */
     private void updateLocationUI() {
         if (mMap == null) {
             return;

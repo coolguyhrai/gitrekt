@@ -41,11 +41,11 @@ public class SocialActivity extends AppCompatActivity {
         followingEvents.clear();
         allIds = getCurrentUsers();
         liuID = getCurrentUser(allIds);
-        for (Integer i = 0; i < liuID.usersFollowed.size(); i++) {
+        //for (Integer i = 0; i < liuID.usersFollowed.size(); i++) {
             /*
             go through usersFollowed and post their Habit Events
              */
-        }
+        //}
 
 
         friendsBut.setOnClickListener(new View.OnClickListener() {

@@ -1,5 +1,6 @@
 package com.example.habitrack;
 
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -37,6 +38,7 @@ import com.google.maps.android.SphericalUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -52,6 +54,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     ToggleButton toggle;
     Boolean test;
     Marker m;  //reference to the marker
+    ArrayList<HabitEvent> allEvents;
+    String map_id_user;
+
 
 
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -86,6 +91,28 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        ElasticSearchController.GetHabitEvent getHabitEvent = new ElasticSearchController.GetHabitEvent();
+
+
+
+
+        SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("loggedInUsersID", MODE_PRIVATE);
+        Log.d("logged in", loggedInUserID.toString());
+        String liUserID = loggedInUserID.getString("loggedInUsersID", null);
+
+        map_id_user = liUserID;
+
+        Log.d("usr", "these usr" + liUserID);
+
+        getHabitEvent.execute("user", liUserID);
+        try {
+            allEvents = getHabitEvent.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
 
 
 
@@ -173,28 +200,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         updateLocationUI();
         getDeviceLocation();
 
-//        if (friends_IDs != null) {
-//            for (i = 0; i < friends_IDs.size(); i++) {
-//                Log.d("rrr", "MarkersList" + friends_IDs.get(i));
-//                the_id = friends_IDs.get(i);
-//                Log.d("free", "ids" + the_id.toString());
-//                friends_locations.add(hec.getHabitEventLocation(Integer.parseInt(the_id)));
-//                Log.d("rrr", "the lcoation" + hec.getHabitEventLocation(Integer.parseInt(the_id)).toString());
-//
-//            }
-//
-//
-//            //Get specific habitType title
-//            for (i = 0;i< friends_locations.size();i++) {
-//                m = mMap.addMarker(new MarkerOptions().position(friends_locations.get(i)).title(hec.getAllHabitEvent().get(i).getTitle()));
-//                Markerslist.add(m);
-//                //Log.d("frass", "MarkersList" + Markerslist.toString());
-//
-//
-//            }
-//        }
 
-        //Search bar
         Log.d("eeee", "i told you souu");
         searchBar();
         switchButton();
@@ -203,7 +209,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-
+    /*
+    Function call that updates the markers and radius within 5 km
+     */
 
     public void highlight(){
 
@@ -232,9 +240,10 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
             }
 
+
             //Get specific habitType title
             for (i = 0; i < friends_locations.size(); i++) {
-                m = mMap.addMarker(new MarkerOptions().visible(false).position(friends_locations.get(i)).title(hec.getAllHabitEvent().get(i).getTitle()));
+                m = mMap.addMarker(new MarkerOptions().visible(false).position(friends_locations.get(i)).title(allEvents.get(i).getTitle()));
                 Markerslist.add(m);
             }
         }
@@ -252,6 +261,9 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     }
 
+    /*
+    function call that sets the filter markers
+     */
     public void switchButton(){
         Log.d("eeee", "i told you so");
         HabitEventController hec = new HabitEventController(getApplication());
@@ -272,14 +284,15 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 the_id = friends_IDs.get(i);
                 Log.d("free", "ids" + the_id.toString());
                 friends_locations.add(hec.getHabitEventLocation(Integer.parseInt(the_id)));
-                Log.d("rrr", "the lcoation" + hec.getHabitEventLocation(Integer.parseInt(the_id)).toString());
+                //Log.d("rrr", "the lcoation" + hec.getHabitEventLocation(Integer.parseInt(the_id)).toString());
+                Log.d("usr", "friends locations " + friends_locations);
 
             }
 
 
             //Get specific habitType title
             for (i = 0;i< friends_locations.size();i++) {
-                m = mMap.addMarker(new MarkerOptions().position(friends_locations.get(i)).title(hec.getAllHabitEvent().get(i).getTitle()));
+                m = mMap.addMarker(new MarkerOptions().position(friends_locations.get(i)).title(allEvents.get(i).getTitle()));
                 Markerslist.add(m);
                 Log.d("frass", "MarkersList" + Markerslist.toString());
 
