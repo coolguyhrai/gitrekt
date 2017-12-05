@@ -78,15 +78,24 @@ public class HabitHistory extends AppCompatActivity {
         Getting the usr ID
          */
 
-        SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("userID", MODE_PRIVATE);
-        usr = loggedInUserID.getString("loggedInUsersID", null);
+        //SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("userID", MODE_PRIVATE);
+        //usr = loggedInUserID.getString("loggedInUsersID", null);
 
 
 
-        Log.d("usr", "these usr" + usr);
 
 
-        getHabitEvent.execute("user", usr);
+
+
+
+
+        SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("loggedInUsersID", MODE_PRIVATE);
+        Log.d("logged in", loggedInUserID.toString());
+        String liUserID = loggedInUserID.getString("loggedInUsersID", null);
+
+        Log.d("usr", "these usr" + liUserID);
+
+        getHabitEvent.execute("user", liUserID);
         try {
             allEvents = getHabitEvent.get();
         } catch (InterruptedException e) {
@@ -96,7 +105,7 @@ public class HabitHistory extends AppCompatActivity {
         }
 
 
-        Log.d("usr", "these are the events" + allEvents.toString());
+        Log.d("usr", "these are the events" + allEvents.get(0).getTitle());
 
 
 
@@ -125,12 +134,13 @@ public class HabitHistory extends AppCompatActivity {
 
         //Filling array with habit event titles
         if(wifi.isConnectedOrConnecting()|| mobile.isConnectedOrConnecting()) {
-            for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
-                if (hc.getAllHabitEvent().get(i).getEmpty() == Boolean.FALSE) {
-                    String title = hc.getAllHabitEvent().get(i).getTitle();
+            for (i = 0; i < allEvents.size(); i++) {
+                if (allEvents.get(i).getEmpty() == Boolean.FALSE) {
+                    Log.d("usr", "blahblahblah" + allEvents.get(0).getTitle());
+                    String title = allEvents.get(i).getTitle();
                     all_habit_titles.add(title);
-                    listview_tracker.add(hc.getAllHabitEvent().get(i).getHabitEventID().toString());
-                    listview_tracker2.add(hc.getAllHabitEvent().get(i).getHabitEventID().toString());
+                    listview_tracker.add(allEvents.get(i).getHabitEventID().toString());
+                    listview_tracker2.add(allEvents.get(i).getHabitEventID().toString());
                 }
             }
         }
@@ -147,14 +157,19 @@ public class HabitHistory extends AppCompatActivity {
         }
 
 
-
+        Log.d("hi", "titles" + all_habit_titles);
 
         Collections.reverse(all_habit_titles);
         Collections.reverse(listview_tracker);
         Collections.reverse(listview_tracker2);
 
+        if(wifi.isConnectedOrConnecting()||mobile.isConnectedOrConnecting()){
+            the_titles = allEvents;
+        }
+        else{
+            the_titles = hc.getRecentHabitEvents();
+        }
 
-        the_titles = hc.getAllHabitEvent();
 
         Collections.reverse(the_titles);
 
@@ -183,7 +198,7 @@ public class HabitHistory extends AppCompatActivity {
                 Intent intent = new Intent(HabitHistory.this, MapsActivity2.class);
 
 
-
+                Log.d("usr", "the trackerrssss" + listview_tracker);
                 if(listview_tracker==null){
                     Log.d("ooo", "MarkersList" + "uuuuuuu");
                 }
@@ -216,10 +231,18 @@ public class HabitHistory extends AppCompatActivity {
                 listview_tracker.clear();
                 all_habit_titles = attempt.update_array();
 
-
-                for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
-                    listview_tracker.add(hc.getAllHabitEvent().get(i).getHabitEventID().toString());
+                if(wifi.isConnectedOrConnecting()||mobile.isConnectedOrConnecting()) {
+                    for (i = 0; i < allEvents.size(); i++) {
+                        listview_tracker.add(allEvents.get(i).getHabitEventID().toString());
+                    }
                 }
+                else{
+                    for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
+                        listview_tracker.add(hc.getRecentHabitEvents().get(i).getHabitEventID().toString());
+                    }
+                }
+
+
                 //adapter.notifyDataSetChanged();
                 adapter = ((new ArrayAdapter<String>(HabitHistory.this, android.R.layout.simple_list_item_1, all_habit_titles)));
                 ListView lv = (ListView)findViewById(R.id.listView_history);
@@ -247,8 +270,8 @@ public class HabitHistory extends AppCompatActivity {
                 if(the_titles.get(i).getEmpty()== Boolean.FALSE) {
                     intent.putExtra("habitEventID", the_titles.get(i).getHabitEventID());
                     Log.d("last", "this is the id " + the_titles.get(i).getHabitEventID());
-                    intent.putExtra("cm", hc.getAllHabitEvent().get(i).getComment());
-                    intent.putExtra("title", hc.getAllHabitEvent().get(i).getTitle());
+                    intent.putExtra("cm", allEvents.get(i).getComment());
+                    intent.putExtra("title", allEvents.get(i).getTitle());
                 }
 
                 startActivity(intent);
@@ -306,15 +329,15 @@ public class HabitHistory extends AppCompatActivity {
 
 
                         if(wifi.isConnectedOrConnecting()||mobile.isConnectedOrConnecting()) {
-                            for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
-                                String comment = hc.getAllHabitEvent().get(i).getComment();
+                            for (i = 0; i < allEvents.size(); i++) {
+                                String comment = allEvents.get(i).getComment();
                                 if (comment == null) {
                                     comment = " ";
                                 }
-                                String title = hc.getAllHabitEvent().get(i).getTitle();
+                                String title = allEvents.get(i).getTitle();
                                 comments_list.add(comment);
                                 habit_title.add(title);
-                                temp_tracker.add(hc.getAllHabitEvent().get(i).getHabitEventID());
+                                temp_tracker.add(allEvents.get(i).getHabitEventID());
 
                                 Log.d("query3", "the comment = " + comments_list.get(i) + "------" + s + "-------" + comments_list.get(i).startsWith(s.toLowerCase()));
 
@@ -382,7 +405,7 @@ public class HabitHistory extends AppCompatActivity {
 
                     for (int i = 0; i < all_habit_titles.size(); i++) {
                         if (all_habit_titles.get(i).startsWith(newText)) {
-                            listview_tracker.add(hc.getAllHabitEvent().get(i).getHabitEventID().toString());
+                            listview_tracker.add(allEvents.get(i).getHabitEventID().toString());
                         }
                     }
                 }
@@ -419,8 +442,8 @@ public class HabitHistory extends AppCompatActivity {
         all_titles.clear();
 
         if(wifi.isConnectedOrConnecting()|| mobile.isConnectedOrConnecting()) {
-            for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
-                String title = hc.getAllHabitEvent().get(i).getTitle();
+            for (i = 0; i < allEvents.size(); i++) {
+                String title = allEvents.get(i).getTitle();
                 Log.d("checking", "this is the title" + title);
                 all_titles.add(title);
 
@@ -428,8 +451,8 @@ public class HabitHistory extends AppCompatActivity {
         }
         else {
 
-            for (i = 0; i < hc.getAllHabitEvent().size(); i++) {
-                String title = hc.getAllHabitEvent().get(i).getTitle();
+            for (i = 0; i < hc.getRecentHabitEvents().size(); i++) {
+                String title = hc.getRecentHabitEvents().get(i).getTitle();
                 Log.d("checking", "this is the title" + title);
                 all_titles.add(title);
 
