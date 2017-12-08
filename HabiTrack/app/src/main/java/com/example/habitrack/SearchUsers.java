@@ -49,9 +49,9 @@ public class SearchUsers extends AppCompatActivity {
         SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("userID", MODE_PRIVATE);
         liuName = loggedInUserID.getString("loggedInName", null);
         liuID = loggedInUserID.getString("loggedInUsersID", null);
-        Log.d("usrNAME", liuName);
+        //Log.d("usrNAME", liuName);
 
-        Log.d("usrInCurrent", liuID);
+        //Log.d("usrInCurrent", liuID);
 
         searchUsersButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,9 +168,6 @@ public class SearchUsers extends AppCompatActivity {
         SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("userID", MODE_PRIVATE);
         liuName = loggedInUserID.getString("loggedInName", null);
         liuID = loggedInUserID.getString("loggedInUsersID", null);
-        Log.d("usrNAME", liuName);
-
-        Log.d("usrInCurrent", liuID);
         NewUser localUser = null;
         for (int i = 0; i < currentUsers.size(); i++) {
             if (currentUsers.get(i).getTitle().equals(liuName)) {

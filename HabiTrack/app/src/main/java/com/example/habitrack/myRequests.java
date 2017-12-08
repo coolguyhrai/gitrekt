@@ -31,7 +31,7 @@ public class myRequests extends AppCompatActivity {
         setContentView(R.layout.activity_my_requests);
         allUsers = getCurrentUsers();
         liu = getCurrentUser(allUsers);
-        requests = liu.getFollowRequests();
+        //requests = liu.getFollowRequests();
         requestsListView = findViewById(R.id.requestList);
 
         for (Integer i = 0; i < requests.size(); i++) {

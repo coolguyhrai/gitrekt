@@ -24,7 +24,7 @@ public class MyFollowing extends AppCompatActivity {
         SharedPreferences loggedInUserID = getApplicationContext().getSharedPreferences("userID", MODE_PRIVATE);
         ArrayList<NewUser> allUsers = getCurrentUsers();
         liu = getCurrentUser(allUsers);
-        following = liu.usersFollowed;
+        //following = liu.usersFollowed;
 
         followersListView = findViewById(R.id.followersListview);
         for (Integer i = 0; i < following.size(); i++) {
